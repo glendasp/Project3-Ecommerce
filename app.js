@@ -8,7 +8,6 @@ var bodyParser = require('body-parser'); //takes the body of my request and pars
 var flash = require('connect-flash');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
-var User = require('./models/user');
 var routes = require('./routes/index');
 var session = require('express-session');
 
@@ -22,6 +21,10 @@ mongoose.connect('mongodb://localhost:27017/ecommerce', function(err){
     console.log("Connected to the database");
   }
 });
+
+
+
+
 
 
 // view engine setup
@@ -63,6 +66,25 @@ app.use(userRoutes);
 //  res.render('login');
 //});
 
+// Make an objecct with references to all of your models. Now in all of your routes,
+// there will be a req.models object containing each model e.g. req.models.Item or req.models.User
+
+var models = {};
+var User = require('./models/user');
+var Order = require('./models/order');
+var Item = require('./models/item');
+
+models.User = User;
+models.Order = Order;
+models.Item = Item;
+
+
+app.use(function(req, res){
+  req.models = models;
+});
+
+
+
 
 //Callback function to check if there is an error or if it successefully running
 app.listen(3000, function(err){
@@ -83,8 +105,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/models/user', User);
+//app.use('/', routes);
+//app.use('/models/user', User);
 
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {

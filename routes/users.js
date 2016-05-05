@@ -1,43 +1,52 @@
 var express = require('express');
 var router = require('express').Router();
-var User = require('../models/user');
 
+var passport = require('passport');
 
-/* GET users listing. */
+/* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  //Use the home page for your application:
+  // shows a choice of local login or Twitter login
+  res.render('index', { title: 'Express' });
+
 });
 
 
-router.get('/signup', function (req, res){
-  res.render('/signup');
+/* GET signup page */
+router.get('/signup', function(req, res, next){
+  console.log('signup form request');
+  res.render('signup', { message : req.flash('signupMessage') } )
 });
 
 
-router.post('/signup', function(req, res, next){
-  var user = new User;
+router.post('/signup', passport.authenticate('local-signup', {
+  successRedirect: '/secret',
+  failureRedirect: '/signup',
+  failureFlash :true
+}));
 
-  user.profile.name = req.body.name;
-  user.password = req.body.password;
-  user.email = req.body.email;
 
-  //Validates if user already exist if not creates it.
-  User.findOne({email: req.body.email}, function(err, existingUser){
-
-    if(existingUser){
-      req.flash('errors','This account already exist');
-      //console.log(reg.body.email + "already exist");
-      return res.redirect('/signup');
-    }else{
-      user.save(function(err,user){
-        if (err) return next (err);
-        //todo create user profile page
-        return res.redirect('/');
-        //res.json ("New user created successfully!! ");
-      });
-    }
-  });
+router.get('/secret', function(req, res){
+  console.log('secret page - todo');
+  res.send('secret page here, succesful sign up.');
 });
+
+
+/* GET Logout */
+router.get('/logout', function(req, res, next) {
+  req.logout();         //passport middleware adds these functions to req.
+  res.redirect('/');
+});
+
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/');
+}
+
+
 
 
 module.exports = router;
