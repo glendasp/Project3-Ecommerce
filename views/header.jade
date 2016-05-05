@@ -5,17 +5,17 @@ nav.navbar.navbar-inverse.navbar-fixed-top
                 span.sr-only Toggle navigation
             a.navbar-brand(href='https://github.com/glendasp/Project3-Ecommerce') Final Project
         #navbar.navbar-collapse.collapse
-            form.navbar-form.navbar-right
+
+            form.navbar-form.navbar-right(method='post' action='/signin' )
                 .form-group
                     input.form-control(type='text', placeholder='Email')
                 .form-group
                     input.form-control(type='password', placeholder='Password')
-                button.btn.btn-success(type='submit' action='/signin' method='post') Sign in
+                button.btn.btn-success(type='submit') Sign in
 
 
-            form.navbar-form.navbar-right
+            form.navbar-form.navbar-right(method='get' action='/signup')
                 .form-group
-                button.btn.btn-success(type='submit' action='/signup' method='post' onclick='signup') Sign up
+                input(type='submit'  value='signup')
 
         .navbar-collapsese
-

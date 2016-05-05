@@ -17,14 +17,10 @@ var Schema = mongoose.Schema;
  */
 
 var ItemSchema = new Schema({
-
-    details:{
-        //_id : Number,
         name : String,
         price : Number,
         qtd: Number,
         category: String
-    }
 });
 
 module.exports = mongoose.model('Item', ItemSchema);
