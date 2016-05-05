@@ -5,13 +5,13 @@ var logger = require('morgan'); //
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser'); //takes the body of my request and parse it to whatever
 
+var flash = require('connect-flash');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 var User = require('./models/user');
 var routes = require('./routes/index');
+var session = require('express-session');
 
-var db = 'mongodb://localhost:27017/ecommerce';
-//mongoose.connect(db);
 
 var app = express(); // app refering to express object
 
@@ -29,6 +29,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 
+app.use(session({
+  resave: true, //force the session to be saved
+  secret: "0123456789"
+}));
+
+
+app.use(flash());
+
 //Creating Middleware
 //Got help for this part from https://github.com/minneapolis-edu/nested_mongoose/blob/master/app.js
 
@@ -36,14 +44,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json()); //allows my express application to parse json
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 var mainRoutes = require('./routes/index');
 var userRoutes = require('./routes/users');
-
-
 app.use(mainRoutes);
-//app.use(userRoutes);
+app.use(userRoutes);
 
 //app.get('/', function (req, resp){
 //  res.render('index');
@@ -81,7 +87,7 @@ app.use('/', routes);
 app.use('/models/user', User);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function(err, req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);

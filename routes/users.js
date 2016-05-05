@@ -1,5 +1,5 @@
 var express = require('express');
-var router = express.Router();
+var router = require('express').Router();
 var User = require('../models/user');
 
 
@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.get('/signup', function (req, res, next){
+router.get('/signup', function (req, res){
   res.render('/signup');
 });
 
@@ -21,37 +21,23 @@ router.post('/signup', function(req, res, next){
   user.password = req.body.password;
   user.email = req.body.email;
 
-  //mongoose
+  //Validates if user already exist if not creates it.
   User.findOne({email: req.body.email}, function(err, existingUser){
 
     if(existingUser){
-      console.log(reg.body.email + "already exist");
+      req.flash('errors','This account already exist');
+      //console.log(reg.body.email + "already exist");
       return res.redirect('/signup');
     }else{
       user.save(function(err,user){
         if (err) return next (err);
-
-        res.json ("New user created successfully!! ");
-
+        //todo create user profile page
+        return res.redirect('/');
+        //res.json ("New user created successfully!! ");
       });
     }
   });
 });
-
-//
-//// *** Not saving to the db
-//app.post('/Adduser', function(req,res, next){
-//  var user = new User();
-//  user.profile.name = req.body.name;
-//  user.password = req.body.password;
-//  user.email = req.body.email;
-//
-//  user.save(function(err){
-//    if (err) return next(err);
-//    res.json('New user was created successfully');
-//  });
-//});
-
 
 
 module.exports = router;

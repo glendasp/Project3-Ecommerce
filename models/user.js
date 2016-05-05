@@ -57,11 +57,8 @@ UserSchema.pre('save', function(next){
             // override the cleartext password with the hashed one
             user.password = hash;
             next();
-
         });
-
     });
-
 });
 
 /* Compare password in the database and the one that the use typed*/

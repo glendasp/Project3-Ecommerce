@@ -1,29 +1,6 @@
-doctype html
-
+extends layout
 block content
 
-html(lang='en')
-  head
-
-    title Jumbotron Template for Bootstrap
-    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
-
-
-    body
-    nav.navbar.navbar-inverse.navbar-fixed-top
-      .container
-        .navbar-header
-          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
-            span.sr-only Toggle navigation
-          a.navbar-brand(href='#') Final Project
-        #navbar.navbar-collapse.collapse
-          form.navbar-form.navbar-right
-            .form-group
-              input.form-control(type='text', placeholder='Email')
-            .form-group
-              input.form-control(type='password', placeholder='Password')
-            button.btn.btn-success(type='submit') Sign in
-        // /.navbar-collapse
     // Main jumbotron for a primary marketing message or call to action
     .jumbotron
       .container
@@ -31,7 +8,7 @@ html(lang='en')
         p
           | This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.
         p
-          a.btn.btn-primary.btn-lg(href='#', role='button') Learn more »
+          a.btn.btn-primary.btn-lg(href='about', role='button') Learn more »
     .container
       // Example row of columns
       .row

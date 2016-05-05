@@ -4,24 +4,19 @@ var passport = require('passport');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-
-router.get('/', function(req, res, next) {
   //Use the home page for your application:
   // shows a choice of local login or Twitter login
-  res.render('index');
+  res.render('index',{ title: 'Express' });
 });
-
 
 
 /* GET signup page */
 router.get('/signup', function(req, res, next){
   res.render('signup', { message : req.flash('signupMessage') } )
 });
+
 router.post('/signup', passport.authenticate('local-signup', {
- // successRedirect: '/secret',
+  successRedirect: '/secret',
   failureRedirect: '/signup',
   failureFlash :true
 }));
