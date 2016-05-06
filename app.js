@@ -33,6 +33,10 @@ app.use(session({
   secret: "0123456789"
 }));
 
+require('./config/passport')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use(flash());
 
@@ -87,10 +91,6 @@ app.set('view engine', 'jade');
 //app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
-
-require('./config/passport')(passport);
-app.use(passport.initialize());
-app.use(passport.session());
 
 //app.use('/', routes);
 //app.use('/models/user', User);
