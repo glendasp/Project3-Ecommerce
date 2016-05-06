@@ -23,15 +23,21 @@ router.get('/signup', function(req, res, next){
 
 router.post('/signup', passport.authenticate('local-signup', {
   successRedirect: '/secret',
-  failureRedirect: '/kaboom',
+  failureRedirect: '/fail',
   failureFlash : true
 }));
 
 
 /* GET Secret */
-router.get('/secret', function(req, res){
+router.get('/secret', isLoggedIn, function(req, res){
   console.log('secret page - todo');
   res.send('secret page here, succesful sign up.');
+});
+
+/* GET fail */
+router.get('/fail', function(req, res){
+  console.log('signup failed - todo');
+  res.send('fail sign up.');
 });
 
 
@@ -45,8 +51,11 @@ router.get('/logout', function(req, res, next) {
 function isLoggedIn(req, res, next) {
   console.log(req);
   if (req.isAuthenticated()) {
+    console.log('User is authenticated')
+    console.log(req.user);
     return next();
   }
+  console.log('user not authenticated');
   res.redirect('/');
 }
 
