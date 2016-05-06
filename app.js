@@ -1,18 +1,18 @@
 var express = require('express'); // Requiring the library
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan'); //
+var morgan = require('morgan'); //
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser'); //takes the body of my request and parse it to whatever
 
 var flash = require('connect-flash');
-var morgan = require('morgan');
 var mongoose = require('mongoose');
-var routes = require('./routes/index');
+//var routes = require('./routes/index');
 var session = require('express-session');
+var passport = require('passport');
 
 
-var app = express(); // app refering to express object
+var app = express();
 
 mongoose.connect('mongodb://localhost:27017/ecommerce', function(err){
   if (err){
@@ -23,17 +23,13 @@ mongoose.connect('mongodb://localhost:27017/ecommerce', function(err){
 });
 
 
-
-
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 
 app.use(session({
-  resave: true, //force the session to be saved
+  //resave: true, //force the session to be saved
   secret: "0123456789"
 }));
 
@@ -43,32 +39,24 @@ app.use(flash());
 //Creating Middleware
 //Got help for this part from https://github.com/minneapolis-edu/nested_mongoose/blob/master/app.js
 
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(bodyParser.json()); //allows my express application to parse json
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 
-var mainRoutes = require('./routes/index');
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+
+//var mainRoutes = require('./routes/index');
 var userRoutes = require('./routes/users');
-app.use(mainRoutes);
+//app.use(mainRoutes);
 app.use(userRoutes);
 
-//app.get('/', function (req, resp){
-//  res.render('index');
-//});
 
-//app.get('/layout', function (req, resp){
-//  res.render('layout');
-//});
-
-//app.get('/login', function (req, resp){
-//  res.render('login');
-//});
-
-// Make an objecct with references to all of your models. Now in all of your routes,
+// Make an object with references to all of your models. Now in all of your routes,
 // there will be a req.models object containing each model e.g. req.models.Item or req.models.User
-
 var models = {};
 var User = require('./models/user');
 var Order = require('./models/order');
@@ -78,15 +66,11 @@ models.User = User;
 models.Order = Order;
 models.Item = Item;
 
-
 app.use(function(req, res){
   req.models = models;
 });
 
-
-
-
-//Callback function to check if there is an error or if it successefully running
+//Callback function to check if there is an error or if it successfully running
 app.listen(3000, function(err){
   if (err) throw err;
   console.log("Server is Running on port 3000")
@@ -97,13 +81,16 @@ app.listen(3000, function(err){
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+//app.use(morgan('dev'));
+//app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(cookieParser());
+//app.use(express.static(path.join(__dirname, 'public')));
+
+require('./config/passport')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 //app.use('/', routes);
 //app.use('/models/user', User);
@@ -119,7 +106,7 @@ app.use(function(err, req, res, next) {
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
+//if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
@@ -127,10 +114,9 @@ if (app.get('env') === 'development') {
       error: err
     });
   });
-}
+//}
 
-// production error handler
-// no stacktraces leaked to user
+// production error handler - no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {

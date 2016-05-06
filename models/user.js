@@ -19,17 +19,29 @@ var Item = require('./item');
 
 var UserSchema = new Schema({
 
-    name : String,
+    local: {
+        username:{
+            type: String,
+            unique: true,
+            required: true
+        },
+        password: String
+    },
+
+
+    //name : String,
     email: { type:String, unique: true, lowercase: true},
-    password: String,
+    //password: String,
 
     address: String,
 
     history:[{
      date: Date,
      paid:{type: Number, default:0}
-     //item:{type: Schema.Types.ObjectId, ref:''}
    }],
+
+    signUpdate: {type: Date,
+        default: Date.now()},
 
    cart : {
      items : [ Item ]
@@ -46,6 +58,7 @@ var UserSchema = new Schema({
 
 UserSchema.pre('save', function(next){
     var user = this; //this refer to userSchema
+    console.log('hash');
 
     // only hash the password if it has been modified (or is new)
     if (!user.isModified('password')) return next(); // if pwd is not modified next
@@ -54,7 +67,7 @@ UserSchema.pre('save', function(next){
     bcrypt.genSalt(10, function(err, salt) {  //more info about SALT_WORK_FACTOR: http://devsmash.com/blog/password-authentication-with-mongoose-and-bcrypt
         if (err) return next(err);
 
-        // hash the password along with our new salt
+        // hash the password along with my new salt
         bcrypt.hash(user.password, salt, function(err, hash) {
             if (err) return next(err); // if there is an erro I want to return the callback with the error
             // override the cleartext password with the hashed one
@@ -67,8 +80,8 @@ UserSchema.pre('save', function(next){
 /* Compare password in the database and the one that the use typed*/
 
 
-UserSchema.method.comparePWD = function(password){
-    return bcrypt.compareSync(password, this.password);
+UserSchema.methods.validPassword = function(password){
+    //Hash entered password, compare with store hash
+    return bcrypt.compareSync(password, this.local.password);
 };
-
 module.exports = mongoose.model('User', UserSchema);

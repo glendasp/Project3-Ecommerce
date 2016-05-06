@@ -25,12 +25,15 @@ module.exports = function(passport) {
         })
     });
 
+
     //Sign up new user.
     passport.use('local-signup', new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password',
         passReqToCallback: true
     }, function (req, username, password, done) {
+
+        console.log("in the callback");
 
         //https://nodejs.org/api/process.html#process_process_nexttick_callback_arg
         //Once the current event loop turn runs to completion, call the callback function.
@@ -52,6 +55,7 @@ module.exports = function(passport) {
                 var newUser = new User();
                 newUser.local.username = username;
                 newUser.local.password = newUser.generateHash(password);
+                newUser.email = req.body.email;
 
                 newUser.save(function (err) {
                     if (err) {
@@ -80,7 +84,7 @@ module.exports = function(passport) {
                     if (!user) {
                         return done(null, false, req.flash('loginMessage', 'User not found'))
                     }
-                    //This method is defined in our user.js model.
+                    //This method is defined in user.js model.
                     if (!user.validPassword(password)) {
                         return done(null, false, req.flash('loginMessage', 'Wrong password'));
                     }

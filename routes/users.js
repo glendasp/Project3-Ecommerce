@@ -1,16 +1,18 @@
 var express = require('express');
-var router = require('express').Router();
-
+var router = express.Router();
 var passport = require('passport');
+var User = require('../models/user');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   //Use the home page for your application:
   // shows a choice of local login or Twitter login
-  res.render('index', { title: 'Express' });
+  res.render('index');
 
 });
 
+//require('./config/passport')(passport);
 
 /* GET signup page */
 router.get('/signup', function(req, res, next){
@@ -21,11 +23,12 @@ router.get('/signup', function(req, res, next){
 
 router.post('/signup', passport.authenticate('local-signup', {
   successRedirect: '/secret',
-  failureRedirect: '/signup',
-  failureFlash :true
+  failureRedirect: '/kaboom',
+  failureFlash : true
 }));
 
 
+/* GET Secret */
 router.get('/secret', function(req, res){
   console.log('secret page - todo');
   res.send('secret page here, succesful sign up.');
@@ -40,13 +43,11 @@ router.get('/logout', function(req, res, next) {
 
 
 function isLoggedIn(req, res, next) {
+  console.log(req);
   if (req.isAuthenticated()) {
     return next();
   }
   res.redirect('/');
 }
-
-
-
 
 module.exports = router;
