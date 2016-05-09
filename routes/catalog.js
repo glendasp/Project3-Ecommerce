@@ -18,39 +18,45 @@ var router = express.Router();
 var passport = require('passport');
 
 
-router.get("/search", function(req, res){
-
+router.get("/search", function(req, res, next){
 //display search form here
     res.send('search form here');
-})
+});
 
-router.get("/search", function(req, res){
+router.get("/search", function(req, res, next) {
 
 //display search form here
     var searchTerm = req.body.search;
-    req.models.Item.find({ name : searchTerm}, function(err, results){
-      //check for errors
-      //if none render results page
-      res.render('searchResults', {results : yourresults}); //todo
+    req.models.Item.find({name: searchTerm}, function (err, results) {
+        //check for errors
+        //if none render results page
 
-      //searchResults template lists items found
-      // searchResults should create URLS in the form
-      //    /search/123456789  where 123456789 is the _id from the database.
+        if (req.query.q) {
+            Product.search({
+                query_string: {query: req.query.q}
+            }, function (err, results) {
+                results:
+                    if (err) return next(err);
+                var data = results.hits.hits.map(function (hit) {
+                    return hit;
+                });
+                res.render('main/search-result', {
+                    query: req.query.q,
+                    data: data
+                });
+                //searchResults template lists items found
+                // searchResults should create URLS in the form
+                //    /search/123456789  where 123456789 is the _id from the database.
+            })
+        }
     })
-})
-
+});
 
 router.get("/search/:item_id", function(req, res) {
-
-//TODO check syntax here!!!!
-    req.models.Item.findById({ _id : req.item_id }, function(err, item) {
-      //check for errors
-      //if none render results page
-      res.render('itemDetail', { item : item }); //todo
-
+    Item.findById({ _id : req.params.id}, function(err, item) {
+      if (err) return next(err);
+      res.render('itemDetail', { item : item });
     })
-
-})
-
+});
 
 module.exports = router;

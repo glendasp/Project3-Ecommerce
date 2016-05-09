@@ -1,18 +1,18 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var passportConfig = require('../config/passport');
 var User = require('../models/user');
 
 
+
 /* GET home page. */
+//Use the home page for your application:
+// shows a choice of local login or Twitter login
 router.get('/', function(req, res, next) {
-  //Use the home page for your application:
-  // shows a choice of local login or Twitter login
   res.render('index');
 
 });
-
-//require('./config/passport')(passport);
 
 /* GET signup page */
 router.get('/signup', function(req, res, next){
@@ -23,6 +23,20 @@ router.get('/signup', function(req, res, next){
 
 router.post('/signup', passport.authenticate('local-signup', {
   successRedirect: '/secret',
+  failureRedirect: '/fail',
+  failureFlash : true
+}));
+
+
+/* GET login page */
+router.get('/login', function(req, res, next){
+  console.log('login form request');
+  res.render('login', { message : req.flash('loginMessage') } )
+});
+
+
+router.post('/login', passport.authenticate('local-login', {
+  successRedirect: '/profile',
   failureRedirect: '/fail',
   failureFlash : true
 }));
