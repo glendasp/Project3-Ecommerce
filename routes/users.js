@@ -5,6 +5,34 @@ var passportConfig = require('../config/passport');
 var User = require('../models/user');
 
 
+//Map between item databse and elastic search - creates a brigde between datase and items
+Product.createMapping(function(err, mapping) {
+  if (err) {
+    console.log("error creating mapping");
+    console.log(err);
+  } else {
+    console.log("Mapping created");
+    console.log(mapping);
+  }
+});
+
+//sync the data with items
+var stream = Product.synchronize();
+var count = 0;
+
+stream.on('data', function() {
+  count++;
+});
+
+stream.on('close', function() {
+  console.log("Indexed " + count + " documents");
+});
+
+stream.on('error', function(err) {
+  console.log(err);
+});
+
+
 
 /* GET home page. */
 //Use the home page for your application:

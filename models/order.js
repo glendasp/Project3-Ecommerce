@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = mongoose.ObjectId;
 
-var Item = require('./item');
+var Product = require('./Product');
 
 var OrderSchema = new Schema({
 
@@ -14,7 +14,7 @@ var OrderSchema = new Schema({
     ref : 'User'
   },
 
-  items_ordered : [ Item ]
+  product_ordered : [ Item ]
 
 });
 

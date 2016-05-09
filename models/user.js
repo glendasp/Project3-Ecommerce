@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var Schema = mongoose.Schema;
 
-var Item = require('./item');
+var Item = require('./Product');
 /* The user schema:
    Attributes,
    Characteristics,
@@ -44,7 +44,7 @@ var UserSchema = new Schema({
         default: Date.now()},
 
    cart : {
-     items : [ Item ]
+       Product : [ Product ]
    }
 
 });

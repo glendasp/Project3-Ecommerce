@@ -64,7 +64,7 @@ app.use(userRoutes);
 var models = {};
 var User = require('./models/user');
 var Order = require('./models/order');
-var Item = require('./models/item');
+var Item = require('./models/Product');
 
 models.User = User;
 models.Order = Order;
