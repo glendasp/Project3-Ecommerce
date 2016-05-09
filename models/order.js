@@ -14,7 +14,7 @@ var OrderSchema = new Schema({
     ref : 'User'
   },
 
-  product_ordered : [ Item ]
+  product_ordered : [ Product ]
 
 });
 

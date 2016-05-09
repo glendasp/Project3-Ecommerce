@@ -64,11 +64,11 @@ app.use(userRoutes);
 var models = {};
 var User = require('./models/user');
 var Order = require('./models/order');
-var Item = require('./models/Product');
+var Product = require('./models/Product');
 
 models.User = User;
 models.Order = Order;
-models.Item = Item;
+models.Product = Product;
 
 app.use(function(req, res){
   req.models = models;

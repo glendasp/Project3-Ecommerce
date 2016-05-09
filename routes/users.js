@@ -5,32 +5,45 @@ var passportConfig = require('../config/passport');
 var User = require('../models/user');
 
 
-//Map between item databse and elastic search - creates a brigde between datase and items
-Product.createMapping(function(err, mapping) {
-  if (err) {
-    console.log("error creating mapping");
-    console.log(err);
-  } else {
-    console.log("Mapping created");
-    console.log(mapping);
-  }
-});
+//Map between item databse and elastic search - creates a bridge between database and items
+//Product.createMapping(function(err, mapping) {
+//  if (err) {
+//    console.log("error creating mapping");
+//    console.log(err);
+//  } else {
+//    console.log("Mapping created");
+//    console.log(mapping);
+//  }
+//});
+//
+//
+//router.get('/product/:id', function(req, res, next) {
+//  Product
+//      .find({ product: req.params.id })
+//      .populate('product')
+//      .exec(function(err, products) {
+//        if (err) return next(err);
+//        res.render('product', {
+//          products: products
+//        });
+//      });
+//});
 
 //sync the data with items
-var stream = Product.synchronize();
-var count = 0;
-
-stream.on('data', function() {
-  count++;
-});
-
-stream.on('close', function() {
-  console.log("Indexed " + count + " documents");
-});
-
-stream.on('error', function(err) {
-  console.log(err);
-});
+//var stream = Product.synchronize();
+//var count = 0;
+//
+//stream.on('data', function() {
+//  count++;
+//});
+//
+//stream.on('close', function() {
+//  console.log("Indexed " + count + " documents");
+//});
+//
+//stream.on('error', function(err) {
+//  console.log(err);
+//});
 
 
 
@@ -91,9 +104,12 @@ router.get('/logout', function(req, res, next) {
 
 
 function isLoggedIn(req, res, next) {
+
   console.log(req);
+
   if (req.isAuthenticated()) {
-    console.log('User is authenticated')
+
+    console.log('User is authenticated');
     console.log(req.user);
     return next();
   }
