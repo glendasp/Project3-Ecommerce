@@ -6,6 +6,13 @@ nav.navbar.navbar-inverse.navbar-fixed-top
             a.navbar-brand(href='/') Home
         #navbar.navbar-collapse.collapse
 
+            //Search form
+            form.navbar-form.navbar-left(method='post', action='/search')
+                .form-group
+                    input.form-control(type='text', name='q', placeholder='Search...')
+                    button.btn.btn-success(type='submit') Submit
+
+            //Login
             form.navbar-form.navbar-right(method='post' action='/login' )
                 .form-group
                     input.form-control(type='text', placeholder='username')
@@ -13,7 +20,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top
                     input.form-control(type='password', placeholder='Password')
                 button.btn.btn-success(type='submit') Log in
 
-
+            //Sigup
             form.navbar-form.navbar-right(method='get' action='/signup')
                 .form-group
                 input.btn.btn-success(type='submit'  value='Click here to Signup')

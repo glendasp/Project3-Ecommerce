@@ -8,32 +8,40 @@ block content
         p
           | This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.
         p
-          a.btn.btn-primary.btn-lg(href='about', role='button') Learn more »
+          a.btn.btn-primary.btn-lg(href='/about', role='button') Learn more »
+
     .container
-      // Example row of columns
       .row
         div.col-md-4
             h2 Search for Hats
+            p
               img(src="/images/hat.jpg")
             p
               | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
             p
-              a.btn.btn-defaulta(href='productdetail/') View details »
+              a.btn.btn-defaulta(href='/productdetail') View details »
               //each product in product ... should i do something like this?
+
+
+
         div.col-md-4
             h2 Search for Jerseys
+            p
               img(src="/images/jersey.jpg")
             p
-              | Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+              | Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
             p
               a.btn.btn-default(href='#', role='button') View details »
+
+
         div.col-md-4
-          h2 Search for Scarves
-            img(src="/images/scarve.jpg")
-          p
-            | Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-          p
-            a.btn.btn-default(href='#', role='button') View details »
+            h2 Search for Scarves
+            p
+              img(src="/images/scarve.jpg")
+            p
+              | Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+            p
+              a.btn.btn-default(href='#', role='button') View details »
       hr
       footer
         p © 2015 Glenda, Inc.
