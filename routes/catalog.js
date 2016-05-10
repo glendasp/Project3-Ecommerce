@@ -27,7 +27,7 @@ router.get("/search", function(req, res, next) {
 
 //display search form here
     var searchTerm = req.body.search;
-    req.models.Item.find({name: searchTerm}, function (err, results) {
+    req.models.Product.find({name: searchTerm}, function (err, results) {
         //check for errors
         //if none render results page
 
@@ -53,9 +53,9 @@ router.get("/search", function(req, res, next) {
 });
 
 router.get("/search/:item_id", function(req, res) {
-    Item.findById({ _id : req.params.id}, function(err, item) {
+    Product.findById({ _id : req.params.id}, function(err, product) {
       if (err) return next(err);
-      res.render('itemDetail', { item : item });
+      res.render('productdetail', { product : product });
     })
 });
 
