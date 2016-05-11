@@ -65,7 +65,6 @@ router.get('/productlist/:cat', function(req, res, next){
     // the links can be in the form /catalog/productdetail/123456765434
     // the
 
-
   })
 
 });
