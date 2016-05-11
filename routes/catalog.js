@@ -51,7 +51,7 @@ router.get('/productlist/:cat', function(req, res, next){
       }
     if (err) {
       console.log(err);
-      return next(err)more
+      return next(err)
     }
       console.log(req.params.cat);
 
