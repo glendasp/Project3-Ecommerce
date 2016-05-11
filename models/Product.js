@@ -4,13 +4,14 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 // I am trying this library to use elastic search to replicate the data from mongodb to elastic search
 var mongoosastic = require('mongoosastic');
-var random = require('mongoose-random');
+//var random = require('mongoose-random');
 
 var ProductSchema = new Schema({
-        category: { type: Schema.Types.ObjectId, ref: 'Category'},
+        category: String,
         name : String,
         color: String,
-        price : Number
+        price : Number,
+        cart : Boolean
         //qtd: Number
 });
 

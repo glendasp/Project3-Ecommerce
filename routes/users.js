@@ -51,9 +51,26 @@ var User = require('../models/user');
 //Use the home page for your application:
 // shows a choice of local login or Twitter login
 router.get('/', function(req, res, next) {
+  console.log('the index page');
   res.render('index');
 
 });
+
+
+
+
+
+router.get('/shoppingCart', function(req, res, next){
+
+  //get the user's cart from req.session.cart. req.session.cart will be an array of product ids.
+
+  //DB query - get the product details for each prodct ID
+
+  //display for user.
+
+
+})
+
 
 /* GET signup page */
 router.get('/signup', function(req, res, next){

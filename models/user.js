@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var Schema = mongoose.Schema;
 
-var Product = require('./Product');
+var Product = require('./product');
 /* The user schema:
    Attributes,
    Characteristics,

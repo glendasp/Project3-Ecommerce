@@ -30,15 +30,27 @@ app.set('view engine', 'jade');
 
 app.use(session({
   //resave: true, //force the session to be saved
-  secret: "0123456789"
+  secret: "0123456789",
+  resave : false,
+  saveUninitialized : false
 }));
 
 require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 app.use(flash());
+
+
+//var mainRoutes = require('./routes/index');
+var userRoutes = require('./routes/users');
+//app.use(mainRoutes);
+app.use(userRoutes);
+
+var catalogRoutes = require('./routes/catalog');
+app.use('/catalog', catalogRoutes);
+
+
 
 //Creating Middleware
 //Got help for this part from https://github.com/minneapolis-edu/nested_mongoose/blob/master/app.js
@@ -53,31 +65,12 @@ app.use(express.static(path.join(__dirname, '/public')));
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 
-//var mainRoutes = require('./routes/index');
-var userRoutes = require('./routes/users');
-//app.use(mainRoutes);
-app.use(userRoutes);
 
-
-// Make an object with references to all of your models. Now in all of your routes,
-// there will be a req.models object containing each model e.g. req.models.Item or req.models.User
-var models = {};
-var User = require('./models/user');
-var Order = require('./models/order');
-var Product = require('./models/Product');
-
-models.User = User;
-models.Order = Order;
-models.Product = Product;
-
-app.use(function(req, res){
-  req.models = models;
-});
 
 //Callback function to check if there is an error or if it successfully running
-app.listen(3000, function(err){
+app.listen(3050, function(err){
   if (err) throw err;
-  console.log("Server is Running on port 3000")
+  console.log("Server is Running on port 3050")
 
 });
 

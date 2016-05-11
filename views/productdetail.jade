@@ -1,24 +1,26 @@
 extends layout
 block content
 
+//too complicated! display data about one thing.
+// category, color, price.
+// Add to cart button
+/// Add to cart button can be part of a form. The form needs to identify the item that's being added to the cart.
+// so in the form, you need to add a hidden field with the _id of the prodct
+// which will then be available to your post route in req.body.
+
 body
 
     div
-    h1 Hats
-
-    form(action='/', method='get')
-        select(name='colorDropDown')
-            each color in colors
-                option(value='#{color}') #{color}
-        input(type='submit' name='colorButton' value='Choose color')
+    h1 #{name}
 
     ul
-        each hat in ecommerce
+        each product in productlist
             li
-                a(href='details/#{productSchema.name}') #{productSchema.name}
+                a(href='productlist/#{product.name}') #{product.name}
 
-    if currentColor
-        form(action'/' method='get')
-            input(type='submit' name='clearButton' value='Clear selection')
+        form(action='/productlist/#{product._id}', method='post')
+            input(type='hidden', value=product._id, name=_id)
+            input(type='hidden', value='true', name="cart")
+            input.done_button(type='submit', class='add_cart', value='Add to Cart')
 
                 button.btn.btn-primary.btn-lg(type='submit') Add to Cart

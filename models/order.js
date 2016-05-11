@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = mongoose.ObjectId;
 
-var Product = require('./Product');
+var Product = require('./product');
 
 var OrderSchema = new Schema({
 
