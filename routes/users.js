@@ -58,18 +58,30 @@ router.get('/', function(req, res, next) {
 
 
 
-
-
 router.get('/shoppingCart', function(req, res, next){
-
   //get the user's cart from req.session.cart. req.session.cart will be an array of product ids.
+  req.session.cart = req.session.cart || {};
+  var cart = req.session.cart;
 
   //DB query - get the product details for each prodct ID
+  product.find({ 'username' : req.user._id, cart : true}, function(err, cart) {
+    if (err) {
+      return next(err);
+    }
 
-  //display for user.
+    //display for user.
+    return res.render('Products', {
+      title: 'Your items',
+      product: product,
+      cart: cart || []
+    });
+  });
 
 
-})
+
+
+
+});
 
 
 /* GET signup page */

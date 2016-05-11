@@ -65,8 +65,6 @@ app.use(express.static(path.join(__dirname, '/public')));
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 
-
-
 //Callback function to check if there is an error or if it successfully running
 app.listen(3050, function(err){
   if (err) throw err;
