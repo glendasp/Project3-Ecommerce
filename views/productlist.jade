@@ -1,0 +1,29 @@
+// todo display list of products. Your route can send this data in an array.
+
+
+extends layout
+block content
+
+    h1 Test
+    h2 #{name}
+
+    if image
+        img(src="/images/#{image}")
+    else
+        i Sorry, no image for #{name}
+
+
+    .container
+        .row
+            div.col-md-4
+                h2 #{name}
+                p
+                    if image
+                        img(src="/images/#{image}")
+                p
+                    | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+                p
+                    a.btn.btn-default(href='/catalog/productdetail', role='button') See detail »
+
+
+

@@ -1,0 +1,23 @@
+extends layout
+
+block content
+
+    .container
+
+        if product
+
+            each product in productlist
+                .item
+                    div
+                        span=index + 1
+                        | .&nbsp;
+                    div
+                        span.name=product.name
+        else
+            p Cart empty
+
+
+
+    .container
+
+    | <p>To check out <a href="/login">log in here</a></p>
