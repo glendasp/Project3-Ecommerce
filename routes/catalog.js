@@ -19,26 +19,47 @@ var passport = require('passport');
 var Product = require('../models/product');
 
 
+//router.param('cat', function(req, res, next, category) {
+//
+//    console.log("params being extracted from URL for " + category);
+//
+//    NewsItems.findById(cat, function(err,category) {
+//        if (err) {
+//            //res.render("favorites", { msg: "unable to find article", "error": error});
+//            console.log("error finding catalog by id:" + err);
+//            // set response to 304 "not modified" or 500/something and unable to find the article
+//            res.status(500).send("Database error: unable to find article.")
+//        }
+//        req.cat = cat;
+//        return next();
+//    });
+//});
+
 // all links in this file are relavtive to /catalog/
-
-
 // so abolute path of this is catalog/productlist/hat (for example)
 
 router.get('/productlist/:cat', function(req, res, next){
   //Show list of ProductSchema
 
-  console.log('get list of this product category ' + req.params.cat);
-  //res.send('cat')
-  Product.find({'category' : req.params.cat }, function(err, products) {
+  console.log('Get list of this product category ' + req.params.cat);
 
-    console.log('product db callback');
+  //res.send('cat');
+  Product.find({'category' : req.params.cat }, function(err, products) {
+      console.log('after find category hat');
+      for (var product in products) {
+          console.log(products[product]);
+      }
     if (err) {
       console.log(err);
-      return next(err);
+      return next(err)more
     }
+      console.log(req.params.cat);
+
+      console.log('product db callback');
     console.log('have results from DB');
     //res.send(products);
     res.render('productdetail', {productlist : products});
+
     //todo : res.render(productdetail, {productlist : items})
     // in jade, build the productlist, build a link to each productdetail pages which include the ID of the product.
     // the links can be in the form /catalog/productdetail/123456765434
@@ -76,6 +97,13 @@ router.post('/addToCart', function(req, res, next){
   //figure out what products was added/
   // each productdetail.jade is going to have the product ID as a hidden name-value pair in a form
   // so you can read it from req.body.
+
+    req.session.cart = req.session.cart || {};
+    var cart = req.session.cart;
+
+    //Read the incoming product data
+    var id = req.param('item_id');
+
 
   // Use req.session to store the Product object.
   // suggestion - create an array called req.session.cart (if it doesn't exist)

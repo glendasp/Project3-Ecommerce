@@ -66,9 +66,9 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 
 //Callback function to check if there is an error or if it successfully running
-app.listen(3050, function(err){
+app.listen(3000, function(err){
   if (err) throw err;
-  console.log("Server is Running on port 3050")
+  console.log("Server is Running on port 3000")
 
 });
 

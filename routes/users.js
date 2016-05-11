@@ -5,18 +5,7 @@ var passportConfig = require('../config/passport');
 var User = require('../models/user');
 
 
-//Map between item databse and elastic search - creates a bridge between database and items
-//Product.createMapping(function(err, mapping) {
-//  if (err) {
-//    console.log("error creating mapping");
-//    console.log(err);
-//  } else {
-//    console.log("Mapping created");
-//    console.log(mapping);
-//  }
-//});
-//
-//
+
 //router.get('/product/:id', function(req, res, next) {
 //  Product
 //      .find({ product: req.params.id })
@@ -78,9 +67,6 @@ router.get('/shoppingCart', function(req, res, next){
   });
 
 
-
-
-
 });
 
 
@@ -92,7 +78,7 @@ router.get('/signup', function(req, res, next){
 
 
 router.post('/signup', passport.authenticate('local-signup', {
-  successRedirect: '/secret',
+  successRedirect: '/',
   failureRedirect: '/fail',
   failureFlash : true
 }));
